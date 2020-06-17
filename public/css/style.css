@@ -1,0 +1,21 @@
+body {
+  background-color: black;
+  color: white;
+  position: relative; }
+
+p {
+  padding: 1%; }
+
+h1, h2 {
+  color: #5e8694;
+  text-align: center; }
+
+ol, tr {
+  background-color: #1a2225;
+  border-radius: 4px;
+  color: #88898d; }
+
+input[type=text] {
+  width: 32px; }
+
+/*# sourceMappingURL=style.css.map */

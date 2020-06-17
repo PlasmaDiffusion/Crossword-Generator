@@ -1,0 +1,42 @@
+$col1 : rgb(26, 34, 37);
+$col2 : rgb(94, 134, 148);
+$col3 : rgb(0, 0, 0);
+$col4 : rgb(136, 137, 141);
+$headCol: rgb(0, 39, 54);
+$outlineCol: rgb(0, 75, 105);
+
+body
+{
+    background-color: $col3;
+    color: white;
+    position: relative;
+}
+
+p 
+{
+    padding: 1%;
+}
+
+%title
+{
+    color: $col2;
+    text-align: center;
+}
+
+h1, h2
+{
+    @extend %title;
+}
+
+ol, tr
+{
+    background-color: $col1;
+    border-radius: 4px;
+    color:$col4;
+    
+}
+
+input[type=text]
+{
+    width:32px;
+}

@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script  src="js/menu.js"></script>
+</head>
+
+<body>
+
+
+    
+
+    <form action="/acSDDtion_page.php">
+        <table>
+            <tr>
+                <td><input type="text" id="0" name="country_code" pattern="[A-Za-z]{1}" ></td>
+                <td><input type="text" id="1" name="country_code" pattern="[A-Za-z]{1}" ></td>
+
+                <td><input type="text" id="2" name="country_code" pattern="[A-Za-z]{1}" ></td>
+                <td><input type="text" id="3" name="country_code" pattern="[A-Za-z]{1}" ></td>
+
+                <td><input type="text" id="4" name="country_code" pattern="[A-Za-z]{1}" ></td>
+                <td><input type="text" id="5" name="country_code" pattern="[A-Za-z]{1}" ></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+
+                <td></td>
+                <td><input type="text" id="6" name="country_code" pattern="[A-Za-z]{1}" ></td>
+
+                <td></td>
+                <td><input type="text" id="7" name="country_code" pattern="[A-Za-z]{1}" ></td>
+            </tr>
+
+            <input type="submit">
+        </table>
+    </form>
+
+    
+
+
+</body>
+
+</html>

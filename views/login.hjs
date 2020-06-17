@@ -1,0 +1,21 @@
+<html>
+<head>
+ <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+ <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+ <div class="container">
+
+    <h1>Login</h1>
+    <form method ="post" action="/login">
+        <input type="text" name="username" placeholder="Username" /><br />
+        <input type="password" name="password" placeholder="Password" /><br />
+        <input type="submit" value="Log In">
+    </form>
+
+    <a href="/signup">Sign Up</a>
+
+ </div>
+</body>
+</html>
