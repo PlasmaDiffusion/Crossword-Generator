@@ -40,8 +40,15 @@
         </table>
     </form>
 
+    <p>
     
-
+        {{#docs}}
+            
+            {{word}}
+            {{hint}}
+            <br>
+        {{/docs}}
+    </p>
 
 </body>
 
