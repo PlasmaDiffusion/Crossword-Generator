@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const {MongoClient} = require('mongodb');
-
+const CrosswordGenerator = require('./generator.js');
 
 var docs = [];
 
@@ -41,6 +41,9 @@ router.get('/', async(req, res, next) => {
 
         data.docs = docs;
         console.log(data);
+        var generator = new CrosswordGenerator(docs, 3);
+        generator.GetGeneratedData();
+
         res.render('index', data);
     }
 
