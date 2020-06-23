@@ -43,10 +43,14 @@
     <p>
     
         {{#docs}}
-            
-            {{word}}
-            {{hint}}
-            <br>
+            {{#0}}
+                {{word}}
+                ({{hint}})
+                <br>
+                 linked to {{linkedWord}} at index {{linkedCharIndex}}
+                <br>
+                <br>
+            {{/0}}
         {{/docs}}
     </p>
 
