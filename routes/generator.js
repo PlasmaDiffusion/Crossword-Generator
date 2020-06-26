@@ -160,31 +160,47 @@ class CrosswordGenerator {
     {
         this.layoutString = ""; //A string of the grid layout. "-" is a blank space.
         this.gridSize = 32;
-        this.pickedWords[pickedWordIndex][0].horizontal = true; //A flag that swaps each time a word is added.
+        this.pickedWords[0][0].horizontal = true; //A flag that swaps each time a word is added.
 
         //Add slots (-)
-        for (let i = 0; i < gridSize; i++)
+        for (let i = 0; i < this.gridSize; i++)
         {
 
-            for (let j = 0; j < gridSize; j++)
+            for (let j = 0; j < this.gridSize; j++)
             {
                 this.layoutString = this.layoutString.concat("-");
             }
 
-            this.layoutString = this.layoutString.concat("\n");
         }
+        this.callNumber = 0;
 
+        for (let i =0; i < this.pickedWords.length; i++)
+        {
+            console.log(this.pickedWords[i][0].childWords);
+        }
 
         //Now insert words
-        this.layoutIndex = (gridSize * 8) + 8;
-        for (let i = 0; i<this.pickedWords.length; i++)
-        {
-            this.InsertWordIntoLayout(i);
-        }
+        this.layoutIndex = (this.gridSize * 8) + 8;
+        
+        this.InsertWordIntoLayout(this.pickedWords[0][0].word, true);
+        
 
-        console.log(this.layoutString);
+        
+        console.log("Layout: \n");
+
+        var debugString = "";
+
+        for (let i = 0; i < this.layoutString.length; i++)
+        {
+            
+            if ((i % this.gridSize) == 0 && i != 0) debugString = debugString.concat("\n");
+            debugString = debugString.concat(this.layoutString[i]);
+
+        }
+        console.log(debugString);
+        //console.log(this.layoutString);
         //console.log("Using these words: \n");
-        console.log(this.pickedWords);
+        //console.log(this.pickedWords);
         //console.log("Generated: \n");
         //console.log(this.crossWordData);
         return this.pickedWords;
@@ -192,14 +208,19 @@ class CrosswordGenerator {
     
     InsertWordIntoLayout(wordToInsert, horizontal) 
     {
-        var pickedWordIndex = 0;
+
+        //console.log(++this.callNumber);
+
+        var pickedWordIndex = -1;
 
         //Find the index of the word to be inserted
         for (let i = 0; i < this.pickedWords.length; i++)
         {
             if (wordToInsert == this.pickedWords[i][0].word)
-            pickedWordIndex = i;
-            break;
+            {
+                pickedWordIndex = i;
+                break;
+            }
         }
 
         this.pickedWords[pickedWordIndex][0].horizontal = horizontal;
@@ -210,35 +231,51 @@ class CrosswordGenerator {
         for (let i = 0; i < wordToPlace.length; i++)
         {
             this.layoutString = this.ReplaceCharAt(this.layoutString, this.layoutIndex, wordToPlace[i]);
-            this.layoutIndex++;
+            
+            if (!this.horizontalWord) this.layoutIndex+= this.gridSize;
+            else this.layoutIndex++;
         }
 
 
         //Now look at the linked characters, and attach their words too.
         let childWords = this.pickedWords[pickedWordIndex][0].childWords;
-        let layoutIndexPreChildWords = this.layoutIndex;
+
+
+        if(!childWords) return;
+
+        let layoutIndexAtEndOfWord = this.layoutIndex;
         for (let i = 0; i < childWords.length; i++)
         {
-            //Find what letter the child word will be added at.
-            let  targetIndex = this.pickedWords[pickedWordIndex][0].charIndexesBeingUsed[i];
-            this.layoutIndex = (layoutIndexPreChildWords - wordToPlace.length) + targetIndex;
 
-            
+
             //If the current word is vertical, all the child words will be horizontal
             let horizontal = !this.pickedWords[pickedWordIndex][0].horizontal;
 
-            if (!this.horizontalWord) this.layoutIndex+= this.gridSize;
+            //Vertical means you have to add stuff by rows
+            let verticalOffset = wordToPlace.length * this.gridSize;
+            
+
+            //Find what letter the child word will be added at.
+            let  targetIndex = this.pickedWords[pickedWordIndex][0].charIndexesBeingUsed[i];
+            this.layoutIndex = (layoutIndexAtEndOfWord - (horizontal ? wordToPlace.length : verticalOffset))
+            + (horizontal ? targetIndex : targetIndex * this.gridSize);
+
+            
+
 
             //Find how far up/left the world will start.
             let identicalChar = this.pickedWords[pickedWordIndex][0].charsBeingUsed[i];
             let wordStartingIndex = childWords[i].indexOf(identicalChar);
 
+            this.layoutIndex -= wordStartingIndex + (wordStartingIndex * !horizontal * this.gridSize);
+
+            //console.log(childWords[i]);
+
             //this.layoutIndex = this.pickedWords[pickedWordIndex][0].childWords;
-            this.layoutString = InsertWordIntoLayout(childWords[i], horizontal);
+            this.InsertWordIntoLayout(childWords[i], horizontal);
             
         }
 
-        return this.layoutString;
     }
 
     ReplaceCharAt(string, index, replacement)
