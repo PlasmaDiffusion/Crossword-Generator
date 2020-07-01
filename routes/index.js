@@ -27,7 +27,7 @@ router.get('/', async(req, res, next) => {
         const col = db.collection("words");
  
         // Make the appropriate DB calls
-        await  listDatabases(client);
+        //await  listDatabases(client);
 
         crosswordData = col.find({});
         docs = [];
@@ -41,12 +41,15 @@ router.get('/', async(req, res, next) => {
         await client.close();
 
         data.docs = docs;
-        console.log(data);
+        console.log(data.docs);
         data.attempts = 0;
+
+
         //Keep generating until a successful crossword is made
         do
         {
             data.attempts++;
+            console.log("attempt " + data.attempts);
             var selector = new WordSelector(docs, 4)
             var generator = new CrosswordGenerator(selector.pickedWords); //This will pick the words to use and link them
             data.docs = generator.Generate(); //This will give us an actual crossword layout
@@ -118,10 +121,10 @@ async function listDatabases(client){
 async function listWords(doc)
 {
     //console.log(doc);
-    var newDoc = JSON.stringify(doc, null, 4);
+    //var newDoc = JSON.stringify(doc, null, 4);
     //docs[(Object.keys(docs).length)] = doc;
     docs.push(doc);
-    console.log("Doc get!");
+    //console.log("Doc get!");
 };
 
 async function errorFunc(error) {
