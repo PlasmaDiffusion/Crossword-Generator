@@ -51,7 +51,11 @@
                 <br>
                 <br>
             {{/0}}
+            <br>
         {{/docs}}
+        {{#attempts}}
+            {{attempts}}
+        {{/attempts}}
     </p>
 
 </body>

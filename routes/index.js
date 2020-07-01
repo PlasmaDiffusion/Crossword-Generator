@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const {MongoClient} = require('mongodb');
 const CrosswordGenerator = require('./generator.js');
+const WordSelector = require('./wordSelector.js');
 
 var docs = [];
 
@@ -41,8 +42,15 @@ router.get('/', async(req, res, next) => {
 
         data.docs = docs;
         console.log(data);
-        var generator = new CrosswordGenerator(docs, 4); //This will pick the words to use and link them
-        data.docs = generator.Generate(); //This will give us an actual crossword layout
+        data.attempts = 0;
+        //Keep generating until a successful crossword is made
+        do
+        {
+            data.attempts++;
+            var selector = new WordSelector(docs, 4)
+            var generator = new CrosswordGenerator(selector.pickedWords); //This will pick the words to use and link them
+            data.docs = generator.Generate(); //This will give us an actual crossword layout
+        } while (generator.failed);
 
         res.render('index', data);
     }
@@ -98,6 +106,7 @@ router.get('/insert', async(req, res, next) => {
    }
 })
 
+//Debug function that outputs database stuff
 async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
  
@@ -105,6 +114,7 @@ async function listDatabases(client){
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 };
 
+//Get all the word data here!
 async function listWords(doc)
 {
     //console.log(doc);
