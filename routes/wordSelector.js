@@ -59,6 +59,7 @@ class WordSelector {
         //Declare/reset grouped word data
         for (let i = 0; i<this.pickedWords.length; i++)
         {
+        this.pickedWords[i].number = i+1;
         this.pickedWords[i].charsBeingUsed = "";
         this.pickedWords[i].childWords = [];
         this.pickedWords[i].charIndexesBeingUsed = [];

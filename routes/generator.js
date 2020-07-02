@@ -15,6 +15,8 @@ class CrosswordGenerator {
     Generate()
     {
 
+        
+        this.numberArray = [];
 
         //Add slots (-)
         for (let i = 0; i < this.gridSize; i++)
@@ -23,9 +25,11 @@ class CrosswordGenerator {
             for (let j = 0; j < this.gridSize; j++)
             {
                 this.layoutString = this.layoutString.concat("-");
+                this.numberArray.push(0);                
             }
 
         }
+        
         this.callNumber = 0;
 
         for (let i =0; i < this.pickedWords.length; i++)
@@ -33,8 +37,8 @@ class CrosswordGenerator {
             //console.log(this.pickedWords[i].childWords);
         }
 
-        //Now insert words
-        this.layoutIndex = (this.gridSize * 8) + 8;
+        //Now insert words at a starting
+        this.layoutIndex = (this.gridSize * Math.floor(this.gridSize/4)) + Math.floor(this.gridSize/4);
         
         this.InsertWordIntoLayout(this.pickedWords[0].word, true);
         
@@ -59,8 +63,6 @@ class CrosswordGenerator {
     InsertWordIntoLayout(wordToInsert, horizontal) 
     {
 
-       //Bug: If first word has no child words then nothing gets added
-    
 
         var pickedWordIndex = -1;
 
@@ -81,13 +83,18 @@ class CrosswordGenerator {
 
         let wordToPlace = this.pickedWords[pickedWordIndex].word;
 
-        //Replaces - with each letter
+        //Replaces - with each letter ( <----------------------------------------   Insert words here!)
         for (let i = 0; i < wordToPlace.length; i++)
         {
             if (this.CheckIfLetterConflicts(i, wordToPlace)) return;
 
+
             //Replace word
             this.layoutString = this.ReplaceCharAt(this.layoutString, this.layoutIndex, wordToPlace[i]);
+
+            //Assign the number at the start of the word
+            this.AssignNumber(i, pickedWordIndex);
+
             
             //Go either 1 slot to the right or 1 slot down
             if (!horizontal) this.layoutIndex+= this.gridSize;
@@ -129,6 +136,22 @@ class CrosswordGenerator {
             
         }
 
+    }
+
+    //Every word needs a number on the crossword puzzle
+    AssignNumber(i, pickedWordIndex)
+    {
+        if (i == 0) {
+            //If empty, then replace 0 with the actual number.
+            if (this.numberArray[this.layoutIndex] == 0)
+                this.numberArray[this.layoutIndex] = this.pickedWords[pickedWordIndex].number;
+            else //If not empty, you have to share a slot with another word...
+            {
+                let str = this.numberArray[this.layoutIndex].toString();
+                let newStr = str.concat(this.pickedWords[pickedWordIndex].number.toString());
+                this.numberArray[this.layoutIndex] = parseInt(newStr);
+            }
+        }
     }
 
     //Replace a character at the given index. Javascript can't do this easily like other languages :P

@@ -53,6 +53,9 @@ router.get('/', async(req, res, next) => {
             var selector = new WordSelector(docs, 4)
             var generator = new CrosswordGenerator(selector.pickedWords); //This will pick the words to use and link them
             data.docs = generator.Generate(); //This will give us an actual crossword layout
+            data.rowSize = generator.gridSize;
+            data.layoutString = generator.layoutString;
+            data.numberData = generator.numberArray;
         } while (generator.failed);
 
         res.render('index', data);
