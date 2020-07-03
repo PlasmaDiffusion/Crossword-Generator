@@ -23,10 +23,6 @@ export function AddElement(document, elementType, newId, idToAddOnto)
     // create a new div element and assign it an id
     var newElement = document.createElement(elementType);
     newElement.id = newId; 
-    // and give it some content 
-    //var newContent = document.createTextNode("Hi there and greetings!"); 
-    // add the text node to the newly created div
-    //newDiv.appendChild(newContent);  
   
     // add the newly created element and its content into the DOM 
     var oldElement = document.getElementById(idToAddOnto); 
@@ -55,7 +51,44 @@ export function ChangePanelVisibility(elem, character)
 
 }
 
+//So goodbye to completely blank columns (except the first and last)
+export function RemoveUneededColumns(document, layoutString, columnSize)
+{
+    for (let i = 0; i <columnSize; i++)
+    {
+        let unusedColumn = true;
+        let inputPanels = [];
 
+        //Ignore first and last
+        if (i == 0 || i == columnSize-1) continue;
+
+        //Check if an empty panel. If any panel isn't empty, then stop the inner loop.
+        for (let j = 0; j <columnSize; j++)
+        {
+            let index = i + (j*columnSize);
+
+            if (layoutString[index] != "-" && layoutString[index] != "." )
+            {
+                unusedColumn = false;
+                break;
+            }
+            else //Record the panel for later
+            {
+                inputPanels.push(document.getElementById(index));
+            }
+        }
+
+
+        if (unusedColumn)
+        {
+            //inputPanels.forEach(element => console.log(element));
+            inputPanels.forEach(element => element.style.display="none");
+        }
+
+    }
+}
+
+//When the user filled out all words, check if complete
 export async function FinishCrossword(layoutString, rowSize)
 {
 
@@ -65,8 +98,10 @@ export async function FinishCrossword(layoutString, rowSize)
     var inputPanels = [];
     var x = 0;
 
+    //Iterate through all text input fields
     document.querySelectorAll('input[type="text"]').forEach(input => {
 
+        //If nothing was filled in, add a -, otherwise add the first letter of the field
         if (input.value != "")
             inputString = inputString.concat(input.value[0]);
         else

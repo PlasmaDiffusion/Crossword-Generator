@@ -9,8 +9,7 @@
 
 <body>
 
-
-    
+    <!-- A form of input fields to be cloned into a crossword pattern. -->  
 
     <form>
         <table>
@@ -20,7 +19,6 @@
             </tr>
             </tbody>
 
-            <!--<input type="submit" id="finish">-->
         </table>
     </form>
     <button class = "finish">Finish</button>
@@ -28,19 +26,29 @@
         
         <h2>Time: <span id="time"></span></h2>
 
-        <!-- Words, hints and what they're linked to. -->
+        <!-- Numbers, hints and words, if you click to show the answer -->
     
-        {{#docs}}
-                {{number}}: {{hint}}
+        <table>
+
+            <th>Hints</th>
+            <tr>
+            {{#docs}}
+            <td>
+                    {{number}}: {{hint}}
+                    <br>
+                    <button class="cheat">Show Answer</button>
+                    <p style="display: none;">{{word}}</p>
+                    <br>
                 <br>
-                <button class="cheat">Show Answer</button>
-                <p style="display: none;">{{word}}</p>
-                <br>
-            <br>
-        {{/docs}}
+            </td>
+            {{/docs}}
+            </tr>
+        </table>
+
 
         {{#attempts}}
             {{attempts}}
+            <!--{{attempts}}-->
         {{/attempts}}
 
         <!--Layout related data -->
@@ -51,7 +59,7 @@
         <p id="layout" style="display: none;">{{layoutString}}</p>
 
 
-            <p id="number" style="display: none;">{{numberData}}</p>
+        <p id="number" style="display: none;">{{numberData}}</p>
 
     </div>
 

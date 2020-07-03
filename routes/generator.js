@@ -108,9 +108,9 @@ class CrosswordGenerator {
 
         //Now look at the linked characters, and attach their words too.
         let childWords = this.pickedWords[pickedWordIndex].childWords;
-        console.log(this.pickedWords[pickedWordIndex].word + " has these child words:");
+        /*console.log(this.pickedWords[pickedWordIndex].word + " has these child words:");
         console.log(this.pickedWords[pickedWordIndex].childWords);
-        console.log("\n");
+        console.log("\n");*/
 
 
         if(!childWords) return;

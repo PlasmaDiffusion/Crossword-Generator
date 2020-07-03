@@ -50,7 +50,7 @@ router.get('/', async(req, res, next) => {
         {
             data.attempts++;
             console.log("attempt " + data.attempts);
-            var selector = new WordSelector(docs, 4)
+            var selector = new WordSelector(docs, 5)
             var generator = new CrosswordGenerator(selector.pickedWords); //This will pick the words to use and link them
             data.docs = generator.Generate(); //This will give us an actual crossword layout
             data.rowSize = generator.gridSize;
