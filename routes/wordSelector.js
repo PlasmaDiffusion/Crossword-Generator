@@ -138,6 +138,20 @@ class WordSelector {
             }
         }
 
+
+                //If the code made it here, it succeeded BUT the first word must be linked to another word, and the child word count must be == total words -1
+        /*var childCount = 0;
+        var success = true;
+        for (let i =0; i < this.pickedWords.length; i++)
+        {
+            let children = this.pickedWords[i].childWords.length;
+            childCount+= children;
+            
+            console.log(this.pickedWords[i].childWords);
+            console.log(childCount.toString() + "/" + (this.pickedWords.length-1).toString());
+            if (children == 0 && childCount < this.pickedWords.length-1) success = false;
+        }*/
+
         //If the code made it here, it succeeded BUT the first word must be linked to another word
         return this.pickedWords[0].childWords.length > 0;
     }

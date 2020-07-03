@@ -4,7 +4,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <script  src="js/crossword.js"></script>
+    <script type="module" src="js/crossword.js"></script>
 </head>
 
 <body>
@@ -25,6 +25,8 @@
     </form>
     <button class = "finish">Finish</button>
     <div>
+        
+        <h2>Time: <span id="time"></span></h2>
 
         <!-- Words, hints and what they're linked to. -->
     
@@ -44,12 +46,12 @@
         <!--Layout related data -->
 
         {{#rowSize}}
-            <p id="rowSize">{{rowSize}}</p>
+            <p id="rowSize" style="display: none;">{{rowSize}}</p>
         {{/rowSize}}
-        <p id="layout">{{layoutString}}</p>
+        <p id="layout" style="display: none;">{{layoutString}}</p>
 
 
-            <p id="number">{{numberData}}</p>
+            <p id="number" style="display: none;">{{numberData}}</p>
 
     </div>
 

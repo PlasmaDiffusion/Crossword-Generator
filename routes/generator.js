@@ -30,20 +30,22 @@ class CrosswordGenerator {
 
         }
         
-        this.callNumber = 0;
+        this.wordsPlaced = 0;
 
-        for (let i =0; i < this.pickedWords.length; i++)
+        /*for (let i =0; i < this.pickedWords.length; i++)
         {
-            //console.log(this.pickedWords[i].childWords);
-        }
+            console.log(this.pickedWords[i].childWords);
+        }*/
 
         //Now insert words at a starting
         this.layoutIndex = (this.gridSize * Math.floor(this.gridSize/4)) + Math.floor(this.gridSize/4);
         
         this.InsertWordIntoLayout(this.pickedWords[0].word, true);
         
+        //Make sure every word actually got placed...
+        if (this.wordsPlaced < this.pickedWords.length) this.failed = true;
 
-        
+        /*
         console.log("Layout: \n");
 
         var debugString = "";
@@ -55,7 +57,7 @@ class CrosswordGenerator {
             debugString = debugString.concat(this.layoutString[i]);
 
         }
-        console.log(debugString);
+        console.log(debugString);*/
 
         return this.pickedWords;
     }
@@ -100,6 +102,8 @@ class CrosswordGenerator {
             if (!horizontal) this.layoutIndex+= this.gridSize;
             else this.layoutIndex++;
         }
+
+        this.wordsPlaced++;
 
 
         //Now look at the linked characters, and attach their words too.
