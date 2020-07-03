@@ -16,7 +16,7 @@
         <table>
             <tbody id="t">
             <tr id="row0">
-                <td id="td0"><input type="text" id="0" pattern="[A-Za-z]{1}" style="color: brown; "></td>
+                <td id="td0"><input type="text" id="0" pattern="[A-Za-z]{1}"></td>
             </tr>
             </tbody>
 
