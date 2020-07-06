@@ -34,7 +34,7 @@ class CrosswordGenerator {
 
         /*for (let i =0; i < this.pickedWords.length; i++)
         {
-            console.log(this.pickedWords[i].childWords);
+            //console.log(this.pickedWords[i].childWords);
         }*/
 
         //Now insert words at a starting
@@ -46,7 +46,7 @@ class CrosswordGenerator {
         if (this.wordsPlaced < this.pickedWords.length) this.failed = true;
 
         /*
-        console.log("Layout: \n");
+        //console.log("Layout: \n");
 
         var debugString = "";
 
@@ -57,7 +57,7 @@ class CrosswordGenerator {
             debugString = debugString.concat(this.layoutString[i]);
 
         }
-        console.log(debugString);*/
+        //console.log(debugString);*/
 
         return this.pickedWords;
     }
@@ -79,7 +79,7 @@ class CrosswordGenerator {
         }
         if (pickedWordIndex == -1)
         {
-            console.log("No word found?");
+            //console.log("No word found?");
             return;
         }
 
@@ -109,8 +109,8 @@ class CrosswordGenerator {
         //Now look at the linked characters, and attach their words too.
         let childWords = this.pickedWords[pickedWordIndex].childWords;
         /*console.log(this.pickedWords[pickedWordIndex].word + " has these child words:");
-        console.log(this.pickedWords[pickedWordIndex].childWords);
-        console.log("\n");*/
+        //console.log(this.pickedWords[pickedWordIndex].childWords);
+        //console.log("\n");*/
 
 
         if(!childWords) return;
@@ -170,7 +170,7 @@ class CrosswordGenerator {
         //Make sure word is blank (-) or at least matching the letter being inserted
         if (this.layoutString[this.layoutIndex] != wordToPlace[i] && this.layoutString[this.layoutIndex] != '-')
         {
-            console.log("Whoops! Non matching letters collided with each other! Restarting...");
+            //console.log("Whoops! Non matching letters collided with each other! Restarting...");
             this.failed = true;
             return true;
         }
@@ -179,7 +179,7 @@ class CrosswordGenerator {
             || (this.layoutIndex-this.gridSize >= 0 && this.layoutString[this.layoutIndex-this.gridSize] != '-')))
         {
             this.LogSurroundingLetters();
-            console.log("Whoops! Two letters are next to each other and they don't make a word. (Left or top) Restarting...");
+            //console.log("Whoops! Two letters are next to each other and they don't make a word. (Left or top) Restarting...");
             this.failed = true;
             return true;
         }
@@ -188,7 +188,7 @@ class CrosswordGenerator {
             || (this.layoutIndex+this.gridSize < this.gridSizeMax-this.gridSize && this.layoutString[this.layoutIndex+this.gridSize] != '-')))
         {
             this.LogSurroundingLetters();
-            console.log("Whoops! Two letters are next to each other and they don't make a word (Right or bottom). Restarting...");
+            //console.log("Whoops! Two letters are next to each other and they don't make a word (Right or bottom). Restarting...");
             this.failed = true;
             return true;
         }
@@ -198,9 +198,9 @@ class CrosswordGenerator {
 
     LogSurroundingLetters()
     {
-        console.log("-"+ this.layoutString[this.layoutIndex-this.gridSize] + "-");
-        console.log(this.layoutString[this.layoutIndex-1] + this.layoutString[this.layoutIndex]  + this.layoutString[this.layoutIndex+1]);
-        console.log("-" + this.layoutString[this.layoutIndex+this.gridSize] + "-");
+        //console.log("-"+ this.layoutString[this.layoutIndex-this.gridSize] + "-");
+        //console.log(this.layoutString[this.layoutIndex-1] + this.layoutString[this.layoutIndex]  + this.layoutString[this.layoutIndex+1]);
+        //console.log("-" + this.layoutString[this.layoutIndex+this.gridSize] + "-");
     }
     
   }

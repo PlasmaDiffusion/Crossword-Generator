@@ -14,7 +14,7 @@ class WordSelector {
             
         this.wordData = [...wordData]; //Get a copy of the array of all words
         
-        console.log("Attempting to generate");
+        //console.log("Attempting to generate");
         
         this.pickedWords = [];
         this.PickWords(numberOfWords);
@@ -28,10 +28,10 @@ class WordSelector {
     {
         //Take words from this pool
         var wordsAvailable = this.wordData;
-        console.log(wordsAvailable);
+        //console.log(wordsAvailable);
 
         if (wordsAvailable.length < 4) console.log("EH? less than 4 words available.")
-        console.log(wordsAvailable.length);
+        //console.log(wordsAvailable.length);
 
         for(let i = 0; i<numberOfWords; i++)
         {
@@ -50,11 +50,6 @@ class WordSelector {
     //Make every word can be part of another word.
     GroupWordsTogether()
     {
-        if (this.pickedWords.length < 4)
-        {
-            console.log("No words???");
-            return false;
-        }
 
         //Declare/reset grouped word data
         for (let i = 0; i<this.pickedWords.length; i++)
@@ -72,7 +67,7 @@ class WordSelector {
         for (let i = 1; i<this.pickedWords.length; i++)
         {
             let word = this.pickedWords[i].word;
-            console.log(word);
+            //console.log(word);
 
 
             let attempts = 0;

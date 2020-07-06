@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script type="module" src="js/crossword.js"></script>
+</head>
+
+<body>
+
+
+        {{#postData}}
+            <h1>{{category}} <br> {{wordCount}} words </h1>
+        {{/postData}}
+
+    <!-- A form of input fields to be cloned into a crossword pattern. -->  
+
+    <form id="crosswordForm">
+        <table>
+            <tbody id="t">
+            <tr id="row0">
+                <td id="td0"><input type="text" id="0" pattern="[A-Za-z]{1}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </form>
+    <button class = "finish">Finish</button>
+    <div>
+        
+        <h2>Time: <span id="time"></span></h2>
+
+        <!-- Numbers, hints and words, if you click to show the answer -->
+    
+        <table>
+
+            <th>Hints</th>
+            
+            {{#docs}}
+            <tr>
+                <td>
+                    {{number}}: {{hint}}
+                </td>
+                <td>
+                    <button class="cheat">Show Answer</button>
+                    <p style="display: none;">{{word}}</p>
+                </td>
+            </td>
+            </tr>
+            {{/docs}}
+        </table>
+
+
+        {{#attempts}}
+            <!--{{attempts}}-->
+        {{/attempts}}
+
+        <!--Layout related data -->
+
+        {{#rowSize}}
+            <p id="rowSize" style="display: none;">{{rowSize}}</p>
+        {{/rowSize}}
+        <p id="layout" style="display: none;">{{layoutString}}</p>
+
+
+        <p id="number" style="display: none;">{{numberData}}</p>
+
+    </div>
+
+</body>
+
+</html>

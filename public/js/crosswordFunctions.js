@@ -69,6 +69,7 @@ export function RemoveUneededColumns(document, layoutString, columnSize)
 
             if (layoutString[index] != "-" && layoutString[index] != "." )
             {
+                //console.log("At index " + index.toString() + " there is this value: " + layoutString[index])
                 unusedColumn = false;
                 break;
             }
@@ -81,8 +82,8 @@ export function RemoveUneededColumns(document, layoutString, columnSize)
 
         if (unusedColumn)
         {
-            //inputPanels.forEach(element => console.log(element));
-            inputPanels.forEach(element => element.style.display="none");
+            inputPanels.forEach(element => console.log(layoutString[element.id]));
+            inputPanels.forEach(element => ChangePanelVisibility(element, "."));
         }
 
     }
@@ -124,13 +125,13 @@ export async function FinishCrossword(layoutString, rowSize)
 
             if (layoutString[layoutIndex] != "-")
             {
-                console.log(layoutString[layoutIndex] + " vs " + inputString[inputIndex]);
+                //console.log(layoutString[layoutIndex] + " vs " + inputString[inputIndex]);
                 //If the letter matches, colour it green to indicate it
                 if (layoutString[layoutIndex] == inputString[inputIndex])
                 {
                     inputPanels[inputIndex].style.color = "green";
                     
-                    console.log(inputPanels[inputIndex].style.color);
+                    //console.log(inputPanels[inputIndex].style.color);
                 }
                 else if (inputString[inputIndex] && layoutString[layoutIndex]) //Make sure both are valid
                 {
@@ -152,7 +153,7 @@ export async function FinishCrossword(layoutString, rowSize)
 
         //Congratulate the player and ask them to play again (redirect them to the main page)
         if (confirm("Nice! You got all the words within " + time.toString() + " seconds! Do another?")) {
-            history.go(-1);
+            window.location.replace(window.location.origin);
           } else {
             txt = "You pressed Cancel!";
           }
@@ -170,7 +171,7 @@ export function Wait() {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve('resolved');
-      }, 2000);
+      }, 1000);
     });
   }
 

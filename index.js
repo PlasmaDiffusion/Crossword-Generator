@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = require('./routes/index');
 const path = require('path'); //Imports the path module
-const bodyParser = require('body-parser') //Import for parsing forms
+const bodyParser = require('body-parser'); //Import for parsing forms
 
 //Mysql stuff
 const session = require('express-session');

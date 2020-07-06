@@ -7,17 +7,34 @@ const WordSelector = require('./wordSelector.js');
 
 var docs = [];
 
-//Hello world
-router.get('/', async(req, res, next) => {
+router.get('', async(req,res, next) => {
+
+
+
+    res.render('index');
+})
+
+router.post("/postTest", async(req, res, next) => {
+
+    console.log(req.body);
+    console.log(req.body.category);
+
+    res.render("index.hjs");
+})
+
+//Generate a crossword to do
+router.post('/crossword', async(req, res, next) => {
 
     //Mongo db setup
     const uri = "mongodb+srv://admin:OyDiI2qNWvvVGreF@cluster0-qjfez.mongodb.net/crosswords?retryWrites=true&w=majority";
 
-    //const uri = "mongodb+srv://admin:OyDiI2qNWvvVGreF@cluster0-qjfez.mongodb.net/crosswords?retryWrites=true&w=majority";
-    const client = new MongoClient(uri);
+   const client = new MongoClient(uri);
+
 
 
     var data = {};
+    data.postData = req.body;
+
     
     try {
         // Connect to the MongoDB cluster
@@ -29,11 +46,20 @@ router.get('/', async(req, res, next) => {
         // Make the appropriate DB calls
         //await  listDatabases(client);
 
-        crosswordData = col.find({});
+        var crosswordData;
+
+        //Find the column here, either with a category filter, or get all of them
+        if (req.body.category != "All") crosswordData = col.find({"category":req.body.category});       
+        else
+        {
+            crosswordData = col.find({});
+            data.postData.category = "";
+        }
+
         docs = [];
         await crosswordData.forEach(listWords,errorFunc);
 
-
+        
  
     } catch (e) {
         console.error(e);
@@ -48,9 +74,9 @@ router.get('/', async(req, res, next) => {
         //Keep generating until a successful crossword is made
         do
         {
-            data.attempts++;
-            console.log("attempt " + data.attempts);
-            var selector = new WordSelector(docs, 5)
+            //data.attempts++;
+            //console.log("attempt " + data.attempts);
+            var selector = new WordSelector(docs, req.body.wordCount)
             var generator = new CrosswordGenerator(selector.pickedWords); //This will pick the words to use and link them
             data.docs = generator.Generate(); //This will give us an actual crossword layout
             data.rowSize = generator.gridSize;
@@ -58,47 +84,51 @@ router.get('/', async(req, res, next) => {
             data.numberData = generator.numberArray;
         } while (generator.failed);
 
-        res.render('index', data);
+        res.render('crossword', data);
     }
 
 
 
 })
 
-router.get('/insert', async(req, res, next) => {
+router.post('/insert', async(req, res, next) => {
 
-    const url = "mongodb+srv://admin:OyDiI2qNWvvVGreF@cluster0-qjfez.mongodb.net/dbname?retryWrites=true&w=majority";
-    const client = new MongoClient(url);
- 
-    // The database to use
-    const dbName = "test";
+
+    //Mongo db setup
+    const uri = "mongodb+srv://admin:OyDiI2qNWvvVGreF@cluster0-qjfez.mongodb.net/crosswords?retryWrites=true&w=majority";
+
+   const client = new MongoClient(uri);
+
    
+    var data  = {};
 
     try {
         await client.connect();
         console.log("Connected correctly to server");
-        const db = client.db(dbName);
 
-        // Use the collection "people"
-        const col = db.collection("people");
+        const db = client.db("crosswords");
+        const col = db.collection("words");
 
         // Construct a document                                                                                                                                                              
-        let personDocument = {
-            "name": { "first": "Alan", "last": "Turing" },
-            "birth": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
-            "death": new Date(1954, 5, 7),  // June 7, 1954                                                                                                                                  
-            "contribs": [ "Turing machine", "Turing test", "Turingery" ],
-            "views": 1250000
+        let newDoc = {
+            "word": req.body.word.toLowerCase(),
+            "hint": req.body.hint,                                                                                                                         
+            "category": req.body.category                                                                                                                              
         }
-        const count = await col.count({"name.first":"Alan"});
+        const count = await col.count({"word":req.body.word.toLowerCase()});
         console.log(count);
-        // Insert a single document, wait for promise so we can read it back
+        // Insert word, but only if it exists.
         if (count == 0)
         {
-        const p = await col.insertOne(personDocument);
+            const p = await col.insertOne(newDoc);
+            data  = {"submit": "Your word has been added to the generator!"};
+        }
+        else
+        {
+            data  = {"submit": "That word already exists!"};
         }
         // Find one document
-        const myDoc = await col.findOne();
+        //const myDoc = await col.findOne();
         // Print to the console
         //console.log(myDoc);
 
@@ -109,6 +139,7 @@ router.get('/insert', async(req, res, next) => {
     finally {
        await client.close();
 
+       res.render('index', data);
    }
 })
 
@@ -118,7 +149,7 @@ async function listDatabases(client){
  
     console.log("Databases:");
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
+}
 
 //Get all the word data here!
 async function listWords(doc)
@@ -128,7 +159,7 @@ async function listWords(doc)
     //docs[(Object.keys(docs).length)] = doc;
     docs.push(doc);
     //console.log("Doc get!");
-};
+}
 
 async function errorFunc(error) {
     if(error)console.log(error);

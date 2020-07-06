@@ -4,64 +4,92 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <script type="module" src="js/crossword.js"></script>
+    <script type="module" src="js/options.js"></script>
 </head>
 
 <body>
 
-    <!-- A form of input fields to be cloned into a crossword pattern. -->  
-
-    <form>
-        <table>
-            <tbody id="t">
-            <tr id="row0">
-                <td id="td0"><input type="text" id="0" pattern="[A-Za-z]{1}"></td>
-            </tr>
-            </tbody>
-
-        </table>
-    </form>
-    <button class = "finish">Finish</button>
-    <div>
+    {{#submit}}
+    <p>
         
-        <h2>Time: <span id="time"></span></h2>
+    {{submit.name}} {{submit}}
+    </p>
+    {{/submit}}
 
-        <!-- Numbers, hints and words, if you click to show the answer -->
-    
-        <table>
 
-            <th>Hints</th>
-            <tr>
-            {{#docs}}
-            <td>
-                    {{number}}: {{hint}}
-                    <br>
-                    <button class="cheat">Show Answer</button>
-                    <p style="display: none;">{{word}}</p>
-                    <br>
+    <!-- A form for selecting a crossword size and category. -->  
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md">
+            <h2>Generate a Crossword!</h2>
+            
+            <form class="center_div" method ="post" action="/crossword">
+                <div class="container">
+                    <div class ="row">
+                <span class="col-"><p>Category</p></span>
+
+                <span class="col-sm">
+                <select id="category" name="category">
+                    <option>All</option>
+                    <option>Animal</option>
+                    <option>Occupation</option>
+                    <option>Food</option>
+                </select>
+                </span>
+                </div>
+                <div class="row">
+            
+                <span class="col-"><p>Words: </p></span>
+                <span class="col-"></span><p id="sizeOutput">4</p></span>
+                <span class="col-sm"><input type="range" min="3" max="8" value="4" class="slider" id="crosswordSize" name="wordCount"></span>
+                </div>
+                </div>
                 <br>
-            </td>
-            {{/docs}}
-            </tr>
-        </table>
+                <br>
+                
+                <input type="submit" value="Generate"></input>
+                
+            </form>
+            </div>
 
+    <!-- A form for submitting words. -->  
+    
+            <div class="col-md">
+            <h2>Put a word in the generator!</h2>
+            <form class="center_div" method="post" action="/insert">
+                <div class="container">
+                <div class="row">
+                        
+                <span class="col-"><p>Word</p></span>
+                <span class="col-sm"><input type="text" id="wordInput" pattern="[A-Za-z]{3,12}" placeholder="A 3-12 letter word..." name="word"></span>
+                </div>
 
-        {{#attempts}}
-            {{attempts}}
-            <!--{{attempts}}-->
-        {{/attempts}}
+                <div class="row">
+                    <span class="col-"><p>Hint</p></span>
+                     <span class="col-sm"><input type="text" id="hintInput" maxlength="50" placeholder="A hint can be 50 characters max..." name="hint"></span>
+                </div>
 
-        <!--Layout related data -->
-
-        {{#rowSize}}
-            <p id="rowSize" style="display: none;">{{rowSize}}</p>
-        {{/rowSize}}
-        <p id="layout" style="display: none;">{{layoutString}}</p>
-
-
-        <p id="number" style="display: none;">{{numberData}}</p>
-
+                <div class="row">
+                <span class="col-"><p>Category</p></span>
+                <span class="col-sm">
+                    <select id="category" name="category">
+                        <option>All</option>
+                        <option>Animal</option>
+                        <option>Occupation</option>
+                        <option>Food</option>
+                    </select>
+                </span>
+                </div>
+                </div>
+                <br>
+                <input type="submit">
+            </form>
+            </div>
+        </div>
     </div>
+
+
 
 </body>
 
