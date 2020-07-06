@@ -67,7 +67,7 @@ export function RemoveUneededColumns(document, layoutString, columnSize)
         {
             let index = i + (j*columnSize);
 
-            if (layoutString[index] != "-" && layoutString[index] != "." )
+            if (layoutString[index+1] != "-" && layoutString[index+1] != "." )
             {
                 //console.log("At index " + index.toString() + " there is this value: " + layoutString[index])
                 unusedColumn = false;

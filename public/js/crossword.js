@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
     }
 
-    //RemoveUneededColumns(document, layoutString, rowSize);
+    RemoveUneededColumns(document, layoutString, rowSize);
 
     //Find all buttons
     document.querySelectorAll('button').forEach(button => {
