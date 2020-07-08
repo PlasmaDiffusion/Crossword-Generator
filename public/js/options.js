@@ -16,5 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
     output.innerHTML = this.value;
     }
 
+    var button = document.getElementById("generateButton");
+
+    button.onclick = () =>{
+
+      //alert("YO");
+      document.getElementById("generatePrompt").innerHTML = "Generating...";
+      setInterval(Tick, 1000);
+    }
+
+
 });
+
+
+function Tick()
+{
+    document.getElementById("generatePrompt").innerHTML += ".";
+}
 

@@ -67,7 +67,7 @@ router.post('/crossword', async(req, res, next) => {
         await client.close();
 
         data.docs = docs;
-        console.log(data.docs);
+        //console.log(data.docs);
         data.attempts = 0;
 
 

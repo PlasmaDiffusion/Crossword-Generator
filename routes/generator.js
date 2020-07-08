@@ -32,11 +32,6 @@ class CrosswordGenerator {
         
         this.wordsPlaced = 0;
 
-        /*for (let i =0; i < this.pickedWords.length; i++)
-        {
-            //console.log(this.pickedWords[i].childWords);
-        }*/
-
         //Now insert words at a starting
         this.layoutIndex = (this.gridSize * Math.floor(this.gridSize/4)) + Math.floor(this.gridSize/4);
         
@@ -44,20 +39,9 @@ class CrosswordGenerator {
         
         //Make sure every word actually got placed...
         if (this.wordsPlaced < this.pickedWords.length) this.failed = true;
+        else if (this.pickedWords.length < 7) this.MakeSureTilesAreSpacedOut();
+        
 
-        /*
-        //console.log("Layout: \n");
-
-        var debugString = "";
-
-        for (let i = 0; i < this.layoutString.length; i++)
-        {
-            
-            if ((i % this.gridSize) == 0 && i != 0) debugString = debugString.concat("\n");
-            debugString = debugString.concat(this.layoutString[i]);
-
-        }
-        //console.log(debugString);*/
 
         return this.pickedWords;
     }
@@ -164,6 +148,10 @@ class CrosswordGenerator {
         return string.substr(0, index) + replacement + string.substr(index + replacement.length);
     }
     
+    //----------------------------------------------------------------------------------------------------------------------
+    //Functions that prevent impossible/ugly layouts below
+    //----------------------------------------------------------------------------------------------------------------------
+
     //If the crossword overlaps old words or becomes unreadable, this function returns true.
     CheckIfLetterConflicts(i, wordToPlace)
     {
@@ -178,16 +166,16 @@ class CrosswordGenerator {
         else if(i == 0 && ((this.layoutIndex-1 > 0 && this.layoutString[this.layoutIndex-1] != '-')
             || (this.layoutIndex-this.gridSize >= 0 && this.layoutString[this.layoutIndex-this.gridSize] != '-')))
         {
-            this.LogSurroundingLetters();
+            //this.LogSurroundingLetters();
             //console.log("Whoops! Two letters are next to each other and they don't make a word. (Left or top) Restarting...");
             this.failed = true;
             return true;
         }
-        //Make sure at the start of the word, 1 letter to the right or below isn't filled in yet. Otherwise we'd have a wrong word
+        //Make sure at the end of the word, 1 letter to the right or below isn't filled in yet. Otherwise we'd have a wrong word
         else if(i == wordToPlace.length-1 && ((this.layoutIndex+1 < this.layoutString.length && this.layoutString[this.layoutIndex+1] != '-')
             || (this.layoutIndex+this.gridSize < this.gridSizeMax-this.gridSize && this.layoutString[this.layoutIndex+this.gridSize] != '-')))
         {
-            this.LogSurroundingLetters();
+            //this.LogSurroundingLetters();
             //console.log("Whoops! Two letters are next to each other and they don't make a word (Right or bottom). Restarting...");
             this.failed = true;
             return true;
@@ -203,6 +191,44 @@ class CrosswordGenerator {
         //console.log("-" + this.layoutString[this.layoutIndex+this.gridSize] + "-");
     }
     
+    //Make sure crossword is neat and spaced out. We don't want more than 4 letters to be surrounding a letter
+    MakeSureTilesAreSpacedOut()
+    {
+        for (let i = 0; i < this.gridSize; i++)
+        {
+
+            for (let j = 0; j < this.gridSize; j++)
+            {
+                let index = j + (i*this.gridSize)
+
+                //Ignore blank spots
+                if (this.layoutString[index] == "-") continue;
+
+                //Get all surrounding tiles (It's like minesweeper)
+                let topChar = this.layoutString[index-this.gridSize];
+                let bottomChar = this.layoutString[index+this.gridSize];
+                let rightChar = this.layoutString[index+1];
+                let leftChar = this.layoutString[index-1];
+                let topRightChar = this.layoutString[index-this.gridSize+1];
+                let bottomRightChar = this.layoutString[index+this.gridSize+1];
+                let topLeftChar = this.layoutString[index-this.gridSize-1];
+                let bottomLeftChar = this.layoutString[index+this.gridSize-1];
+
+                let surroundingLetterCount = (topChar != "-") + (bottomChar != "-") + (rightChar != "-") + (leftChar != "-") 
+                +  (topRightChar != "-") +  (bottomRightChar != "-") +  (topLeftChar != "-") +  (bottomLeftChar != "-");
+
+                if (surroundingLetterCount >= 5)
+                {
+                    this.failed = true;
+                    //console.log(surroundingLetterCount + " surrounding words...");
+                    break;
+                }
+                
+            }
+
+        }
+    }
+
   }
   
 module.exports = CrosswordGenerator

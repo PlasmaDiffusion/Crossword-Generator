@@ -48,7 +48,8 @@
                 <br>
                 <br>
                 
-                <input type="submit" value="Generate"></input>
+                <p id="generatePrompt"></p>
+                <input type="submit" value="Generate" id ="generateButton"></input>
                 
             </form>
             </div>
