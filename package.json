@@ -1,5 +1,5 @@
 {
-  "name": "intro-to-express",
+  "name": "crossword-generator",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
@@ -27,9 +27,8 @@
     "url": "https://github.com/PlasmaDiffusion/Intro-To-Express/issues"
   },
   "homepage": "https://github.com/PlasmaDiffusion/Intro-To-Express#readme",
-  "description": "",
-
   "engines": {
     "node": "12.x"
-  }
+  },
+  "description": ""
 }
