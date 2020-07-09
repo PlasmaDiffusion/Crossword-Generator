@@ -95,8 +95,8 @@ router.post('/insert', async(req, res, next) => {
 
 
     //Mongo db setup
-    const uri = "mongodb+srv://admin:OyDiI2qNWvvVGreF@cluster0-qjfez.mongodb.net/crosswords?retryWrites=true&w=majority";
-
+    const uri = "mongodb+srv://admin:" + process.env.MONGO_PASS + "@cluster0-qjfez.mongodb.net/crosswords?retryWrites=true&w=majority";
+    process.env.DATABASE_PASS
    const client = new MongoClient(uri);
 
    
