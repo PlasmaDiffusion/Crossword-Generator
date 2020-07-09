@@ -11,10 +11,15 @@
 
     {{#submit}}
     <p>
+
         
     {{submit.name}} {{submit}}
     </p>
     {{/submit}}
+
+    
+    <h1>Crossword Puzzle Generator</h1>
+    <br><br><br><br><br>
 
 
     <!-- A form for selecting a crossword size and category. -->  
