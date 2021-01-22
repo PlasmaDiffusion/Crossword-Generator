@@ -6,48 +6,107 @@ body {
 p {
   padding: 1%; }
 
-h1, h2 {
-  color: #0e8ea2;
+h1,
+h2 {
+  color: #4dd7ec;
   text-align: center; }
 
-ol, tr {
+ol,
+tr {
   background-color: #0e8ea2;
   border-radius: 4px;
   color: white; }
 
+select {
+  margin-bottom: 2rem; }
+
+.container {
+  max-width: 60%; }
+
 #hintTable {
   /*border: 1px solid;
+    table-layout: fixed;
+    width: 100%;*/
   table-layout: fixed;
-  width: 100%;*/
-  table-layout: fixed;
-  width: 80%; }
+  margin: auto; }
   #hintTable td {
     padding: 2%;
-    margin: 1%;
-    display: flex;
-    flex-wrap: wrap; }
+    margin: 1%; }
+
+th {
+  width: 70%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; }
+
+table tr:first-child td:first-child {
+  border-top-left-radius: 10px; }
+
+table tr:first-child td:last-child {
+  border-top-right-radius: 10px; }
+
+table tr:last-child td:first-child {
+  border-bottom-left-radius: 10px; }
+
+table tr:last-child td:last-child {
+  border-bottom-right-radius: 10px; }
+
+#hintTable tr:first-child td:first-child {
+  border-top-left-radius: 0px; }
+
+#hintTable tr:last-child td:first-child {
+  border-bottom-left-radius: 0px; }
+
+#hintTable tr:last-child td:last-child {
+  border-bottom-right-radius: 0px; }
 
 form {
-  background-color: #1A6880;
+  background-color: #1a6880;
   padding: 10px;
-  border-radius: 2%; }
+  border-radius: 8px; }
 
 #crosswordForm {
-  background-color: #1d5261;
-  margin: 2%; }
+  background-color: #1d5261; }
 
-input[type=text] {
+input[type="text"] {
   width: 32px; }
 
 .center_div {
   margin: 0 auto;
   width: 80%; }
 
+.finish {
+  margin-left: 50%;
+  margin-bottom: 5%;
+  margin-top: 5%;
+  font-size: 2rem; }
+
 #wordInput {
-  width: 50%; }
+  width: 100%;
+  margin-bottom: 2rem; }
 
 #hintInput {
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 2rem; }
+
+button,
+input[type="submit"] {
+  background-color: #1a6880;
+  border: none;
+  border-radius: 4px;
+  color: white; }
+
+input[type="submit"] {
+  background-color: #1d5261;
+  padding: 10px;
+  margin-left: 40%;
+  margin-right: auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: center; }
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: #0e8ea2; }
 
 .slider {
   -webkit-appearance: none;
@@ -56,8 +115,9 @@ input[type=text] {
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s; }
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin-left: 16px; }
 
 .slider:hover {
   opacity: 1; }
@@ -73,7 +133,30 @@ input[type=text] {
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #4CAF50;
+  background: #4caf50;
   cursor: pointer; }
+
+@media screen and (max-width: 480px) {
+  .container {
+    max-width: 100%; }
+
+  #crosswordForm {
+    padding: 0;
+    margin: auto; }
+
+  #hintTable {
+    margin: auto;
+    min-width: 400px; } }
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  #crosswordForm {
+    margin: auto;
+    margin-left: 15%; } }
+@media screen and (min-width: 769px) {
+  #crosswordForm {
+    margin: auto;
+    width: 25%; }
+
+  #hintTable {
+    width: 50%; } }
 
 /*# sourceMappingURL=style.css.map */
